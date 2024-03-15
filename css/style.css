@@ -1,0 +1,178 @@
+* {
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    position: relative;
+}
+
+.input {
+    border: none;
+    padding: 12px;
+    width: calc(100% - 24px);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.input:hover {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.input:focus {
+    outline: none !important;
+    border: 1px solid #547CFB;
+}
+
+.btn {
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.white.btn {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.gray.input {
+    color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    background-color: #000000;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.auth-container {
+    margin-top: calc(50vh - 180px);
+    width: 280px;
+}
+
+.container {
+    margin: 60px 50px 0 50px;
+    width: calc(100vw - 100px);
+    max-width: 500px;
+}
+
+.section {
+    margin-bottom: 60px;
+}
+
+.text {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    width: calc(100% - 220px);
+}
+
+.center {
+    display: flex;
+    align-items: center;
+}
+
+.lil-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 10px;
+    padding-bottom: 20px;
+}
+
+.hover-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 10px;
+    height: 60px;
+}
+
+.hover {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: 100%;
+}
+    
+.icon-container {
+    color: white;
+    display: flex;
+    height: calc(40px);
+    margin-left: 12px;
+    align-items: center;
+}
+
+.reverse-section {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.notification-container {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.notification {
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: rgb(22, 22, 22);
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+}
+
+.notification div {
+    white-space: pre-wrap;
+    line-height: 20px;
+}
+    
+.timer-text {
+    color: #547CFB;
+    font-size: 16px;
+    flex-direction: row-reverse;
+    align-items: center;
+    display: flex;
+}
+
+.lil-timer {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    width: 100px;
+    right: 80px;
+}
+
+.inactive-task .text {
+    text-decoration: line-through;
+    color: rgba(255, 255, 255, 0.5)
+}
+
+.font-1 {
+    font-size: 14px;
+}
+
+.font-2 {
+    font-size: 16px;
+}
+
+.font-3 {
+    font-size: 20px;
+}

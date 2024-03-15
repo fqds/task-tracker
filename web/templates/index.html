@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <body id="body">
+            <div class="container">
+                <div class="section">
+                    <div class="lil-container">
+                        <input id="input" class="gray input font-1" onkeyup="new_task_enter(event)">
+                        <div class="icon-container" onclick="new_task(true)">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.5 8.96533C9.5 8.48805 9.5 8.24941 9.59974 8.11618C9.68666 8.00007 9.81971 7.92744 9.96438 7.9171C10.1304 7.90525 10.3311 8.03429 10.7326 8.29239L15.4532 11.3271C15.8016 11.551 15.9758 11.663 16.0359 11.8054C16.0885 11.9298 16.0885 12.0702 16.0359 12.1946C15.9758 12.337 15.8016 12.449 15.4532 12.6729L10.7326 15.7076C10.3311 15.9657 10.1304 16.0948 9.96438 16.0829C9.81971 16.0726 9.68666 15.9999 9.59974 15.8838C9.5 15.7506 9.5 15.512 9.5 15.0347V8.96533Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="icon-container" onclick="new_task(false)" style="position: absolute; right: 50px">
+                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 7.33331V14.6666M7.33337 11H14.6667M20.1667 11C20.1667 16.0626 16.0627 20.1666 11 20.1666C5.93743 20.1666 1.83337 16.0626 1.83337 11C1.83337 5.93737 5.93743 1.83331 11 1.83331C16.0627 1.83331 20.1667 5.93737 20.1667 11Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div id="rn_section" class="reverse-section">
+
+                    </div>
+                </div>
+            </div>
+            <div id="notification-container" class="notification-container">
+            </div>
+        </body>
+        <script>
+            var input = document.getElementById("input")
+            const stop_svg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M8 9.6C8 9.03995 8 8.75992 8.10899 8.54601C8.20487 8.35785 8.35785 8.20487 8.54601 8.10899C8.75992 8 9.03995 8 9.6 8H14.4C14.9601 8 15.2401 8 15.454 8.10899C15.6422 8.20487 15.7951 8.35785 15.891 8.54601C16 8.75992 16 9.03995 16 9.6V14.4C16 14.9601 16 15.2401 15.891 15.454C15.7951 15.6422 15.6422 15.7951 15.454 15.891C15.2401 16 14.9601 16 14.4 16H9.6C9.03995 16 8.75992 16 8.54601 15.891C8.35785 15.7951 8.20487 15.6422 8.10899 15.454C8 15.2401 8 14.9601 8 14.4V9.6Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>`
+            const start_svg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                               <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                               <path d="M9.5 8.96533C9.5 8.48805 9.5 8.24941 9.59974 8.11618C9.68666 8.00007 9.81971 7.92744 9.96438 7.9171C10.1304 7.90525 10.3311 8.03429 10.7326 8.29239L15.4532 11.3271C15.8016 11.551 15.9758 11.663 16.0359 11.8054C16.0885 11.9298 16.0885 12.0702 16.0359 12.1946C15.9758 12.337 15.8016 12.449 15.4532 12.6729L10.7326 15.7076C10.3311 15.9657 10.1304 16.0948 9.96438 16.0829C9.81971 16.0726 9.68666 15.9999 9.59974 15.8838C9.5 15.7506 9.5 15.512 9.5 15.0347V8.96533Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                               </svg>`
+            const new_svg = `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path d="M11 7.33331V14.6666M7.33337 11H14.6667M20.1667 11C20.1667 16.0626 16.0627 20.1666 11 20.1666C5.93743 20.1666 1.83337 16.0626 1.83337 11C1.83337 5.93737 5.93743 1.83331 11 1.83331C16.0627 1.83331 20.1667 5.93737 20.1667 11Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                             </svg>`
+            const close_svg = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                               <path d="M13 1L1 13M1 1L13 13" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                               </svg>`
+
+                             
+            const container = document.getElementsByClassName("container")[0]
+            let active_task = undefined
+
+            let offset_days = 1
+    
+            function makeid(length) {
+                let result = '';
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                const charactersLength = characters.length;
+                let counter = 0;
+                while (counter < length) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                counter += 1;
+                }
+                return result;
+            }
+            
+            function delete_element(event, parent_recursion = 0) {
+                var target = event.target
+                for (let i = 0; i <= parent_recursion; i++) {
+                    target = target.parentNode
+                }
+                target.parentNode.removeChild(target)
+            }
+
+            function delete_element_by_id(id) {
+                var target = document.getElementById(id)
+                if (!target) {
+                    return
+                } 
+                target.parentNode.removeChild(target)
+            }
+
+            function makeid(length) {
+                let result = '';
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                const charactersLength = characters.length;
+                let counter = 0;
+                while (counter < length) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                counter += 1;
+                }
+                return result;
+            }
+
+            function add_notification(text) {
+                const notification_container = document.getElementById("notification-container")
+                const my_id = makeid(8)
+                notification_container.innerHTML += `<div id="${my_id}" class="notification"><div>${text}</div><div onclick="delete_element_by_id('${my_id}')">${close_svg}</div></div>`
+            }
+            
+            async function timer_updater(id) {
+                while (true) {
+                    await new Promise(r => setTimeout(r, 1000));
+                    const timer = document.getElementById(id)
+                    if (!id) {
+                        return
+                    }
+                    let time = timer.textContent;
+                    if (time[4] === "9") {
+                        if (time[3] === "5") {
+                            if (time[1] === "9") {
+                                time = (time[0] - 0 + 1) + "0:00"
+                            } else {
+                                time = time[0] + (time[1] - 0 + 1) + ":00"
+                            }
+                        } else {
+                            time = time[0] + time[1] + ":" + (time[3] - 0 + 1) + "0"
+                        }
+                    } else {
+                        time = time[0] + time[1] + ":" + time[3] + (time[4] - 0 + 1)
+                    }
+                    timer.textContent = time
+                }
+            }
+            
+            function stop_timer(id) {
+                const timer = document.getElementById(id)
+                if (timer.textContent.slice(0, 2) === "00") {
+                    timer.parentNode.parentNode.removeChild(timer.parentNode)
+                    alert("Задачи длительностью менее 1 минуты не сохраняются!")
+                } else {
+                    timer.id = ""
+                    timer.textContent = timer.textContent.slice(0, 2) - 0 + " м"
+                }
+            }
+            
+
+            
+            async function request(url, payload) {
+                if (payload) {
+                    payload = JSON.stringify(payload)
+                } else {
+                    payload = undefined
+                }
+                return await fetch(url, {
+                    method: "POST",
+                    credentials: "include",
+                    mode: "cors",
+                    body: payload,
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+            }
+
+            function new_task_enter(event) {
+                if (event.keyCode === 13) {
+                    new_task(false)
+                }
+            }
+            
+            
+            async function new_task(is_started) {
+                if (is_started && active_task !== undefined) {
+                    add_notification("Сначала завершите текущую задачу")
+                    return
+                }
+                const url = "/new_task"
+                const input = document.getElementById("input")
+                const value = input.value
+                if (value === "") {
+                    return
+                }
+                const payload = {
+                    "text": value,
+                    "is_started": is_started
+                }
+                const response = await request(url, payload);
+                const data = await response.json()
+                console.log(data)
+                if (data["task"]) {
+                    await create_task(data["task"])
+                }
+                input.value = ""
+            }
+            
+            async function stop_task(task_id) {
+                if (Date.now() - active_task["started_at"] - 60 * 1000 < 0) {
+                    add_notification("Задачи длительностью\nменее 1 минуты не сохраняюся")
+                    return
+                }
+                const url = "/stop_task"
+                const payload = {
+                    "task_id": task_id
+                }
+                const response = await request(url, payload);
+                const data = await response.json()
+                console.log(data)
+                if (data["task"]) {
+                    delete_element_by_id(task_id)
+                    active_task = undefined
+                    await create_task(data["task"])
+                }
+                input.value = ""
+            }
+
+            async function run_task(task_id) {
+                if (active_task !== undefined) {
+                    add_notification("Сначала завершите текущую задачу")
+                    return
+                }
+                const url = "/run_task"
+                const payload = {
+                    "task_id": task_id
+                }
+                const response = await request(url, payload);
+                const data = await response.json()
+                console.log(data)
+                if (data["task"]) {
+                    delete_element_by_id(task_id)
+                    await create_task(data["task"])
+                }
+                input.value = ""
+            }
+
+            function to_day(time) {
+                return Math.floor(time/86400000)*86400000
+            }
+
+            function get_section_by_time(time) {
+                const lil_time = to_day(time)
+                let section = document.getElementById(lil_time)
+                console.log(section)
+                if (!section) {
+                    let time_text = lil_time
+                    if (to_day(time) === to_day(Date.now())) {
+                        time_text = "Сегодня"
+                    }
+                    container.innerHTML += `<div id="${lil_time}" class="section"><div class="lil-container" style="justify-content: normal"><div class="text font-3" style="width: auto; margin-right: 13px;">${time_text}</div></div></div>`
+                    section = document.getElementById(lil_time)
+                }
+                return section
+            }
+            
+            function get_lil_time_text(started_at, stopped_at) {
+                started_at += 1000 * 60 * 60 * 3
+                stopped_at += 1000 * 60 * 60 * 3
+                let start_time = Math.floor((started_at - to_day(started_at)) / 60000)
+                let start_minutes = (start_time % 60 + "").padStart(2, '0')
+                start_time = `${Math.floor(start_time/60)}:${start_minutes}` 
+                let stop_time = Math.floor((stopped_at - to_day(stopped_at)) / 60000)
+                let stop_minutes = (stop_time % 60 + "").padStart(2, '0')
+                stop_time = `${Math.floor(stop_time/60)}:${stop_minutes}` 
+                return `${start_time} - ${stop_time}`
+            }
+            
+            function get_time_text(started_at, stopped_at) {
+                let time = Math.floor((stopped_at - started_at) / 60000)
+                let time_hours = Math.floor(time / 60)
+                if (time_hours) {
+                    time = `${time_hours} Ч ${time % 60} М`
+                } else {
+                    time = `${time % 60} М`
+                }
+                return time
+            }
+            
+            async function create_task(task) {
+                const rn_section = document.getElementById("rn_section")
+                const task_id = task["task_id"]
+                const text = task["text"]
+                const is_active = task["is_active"]
+                const started_at = task["started_at"]
+                const stopped_at = task["stopped_at"]
+                console.log(task, stopped_at)
+                if (is_active) {
+                    active_task = task
+                    const hover_onmouseover = `document.getElementById('${task_id}').childNodes[3].style = 'display: none;'; document.getElementById('${task_id}').childNodes[4].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
+                    const hover_onmouseout = `document.getElementById('${task_id}').childNodes[3].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[4].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
+                    const lil_time = get_lil_time_text(started_at, Date.now())
+                    rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">00:00</div><div id="stop-button" class="center" onclick="stop_task(${task_id});" style="display: none;">${stop_svg}</div></div>`
+                } else if (stopped_at) {
+                    let cur_section = get_section_by_time(started_at)
+                    const hover_onmouseover = `document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
+                    const hover_onmouseout = `document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
+                    const lil_time = get_lil_time_text(started_at, stopped_at)
+                    const time = get_time_text(started_at, stopped_at)
+                    cur_section.innerHTML += `<div id="${task_id}" class="hover-container inactive-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${time}</div></div>`
+                } else {
+                    const hover_onmouseover = `document.getElementById('${task_id}').childNodes[2].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
+                    const hover_onmouseout = `document.getElementById('${task_id}').childNodes[2].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
+                    rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div id="start-button" class="center" style="display: none;" onclick="run_task(${task_id});">${start_svg}</div></div>`
+                    
+                }
+
+            }            
+            async function get_tasks() {
+                const url = "/get_tasks"
+                const payload = {}
+                const response = await request(url, payload);
+                const data = await response.json()
+                console.log(data)
+                data["tasks"].forEach(async task => {
+                    await create_task(task)
+                })
+            }
+
+            get_tasks()
+            let rn = to_day(Date.now())
+            let today_section = get_section_by_time(Date.now())
+            today_section.childNodes[0].innerHTML += `<div class="class="center">${new_svg}</div>`
+
+        </script>
+</body>
+</html>
