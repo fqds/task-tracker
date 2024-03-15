@@ -4,7 +4,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from sqlalchemy import or_, and_, update
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from web import app, db
 from web.models import Users, Tasks
@@ -44,11 +44,18 @@ def new_task():
 @login_required
 def get_tasks():
     content = request.get_json(silent=True)
-    if 'last_timestamp' in content: last_timestamp = content['last_timestamp']
-    else: last_timestamp = None
+    if 'offset_days' in content: offset_days = content['offset_days']
+    else: offset_days = None
+
+    if 'length_days' in content: length_days = content['length_days']
+    else: length_days = None
     
     user_id = current_user.id
-    tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, or_(Tasks.is_active == True, Tasks.started_at == None, and_(Tasks.started_at >= date.today()))))
+
+    if length_days != None and offset_days != None:
+        tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, Tasks.started_at >= date.today() - timedelta(days=offset_days + length_days), Tasks.started_at <= date.today() - timedelta(days=offset_days)))
+    else:
+        tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, or_(Tasks.is_active == True, Tasks.started_at == None, and_(Tasks.started_at >= date.today()))))
     
     raw_tasks = []
     for task in tasks:

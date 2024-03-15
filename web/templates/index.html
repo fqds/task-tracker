@@ -34,7 +34,7 @@
                 </div>
                 
                 <div id="footer" class="footer">
-                    <div class="footer-el">
+                    <div class="footer-el" onclick="load_tasks()">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 14H14M8 2V11.3333M8 11.3333L12.6667 6.66667M8 11.3333L3.33333 6.66667" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -84,7 +84,7 @@
             const container = document.getElementsByClassName("container")[0]
             let active_task = undefined
 
-            let offset_days = 1
+            let offset_days = 0
     
             function makeid(length) {
                 let result = '';
@@ -359,6 +359,21 @@
                     profile.textContent = data["user"]["login"]
                     profile.parentElement.style.display = null
                 }
+            }
+            
+            async function load_tasks() {
+                const url = "/get_tasks"
+                const payload = {
+                    "offset_days": offset_days,
+                    "length_days": 3,
+                }
+                offset_days += 3
+                const response = await request(url, payload);
+                const data = await response.json()
+                console.log(data)
+                data["tasks"].forEach(async task => {
+                    await create_task(task)
+                })
             }
             
             whoami()
