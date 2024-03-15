@@ -127,6 +127,21 @@ body {
     flex-direction: column-reverse;
 }
 
+.footer {
+    display: flex;
+    padding-bottom: 50px;
+}
+
+.footer-el {
+    display: flex;
+    gap: 2px;
+}
+
+.footer-el div {
+    color: #7A7A7A;
+    width: 130px;
+}
+
 .notification {
     margin-top: 20px;
     padding: 30px;
