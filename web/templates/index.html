@@ -99,8 +99,12 @@
 
             function add_notification(text) {
                 const notification_container = document.getElementById("notification-container")
+                let notifications = document.getElementsByClassName("show-right-animation")
+                for (let i = 0; i < notifications.length; i++) {
+                        notifications[i].classList.remove('show-right-animation');
+                }
                 const my_id = makeid(8)
-                notification_container.innerHTML += `<div id="${my_id}" class="notification"><div>${text}</div><div onclick="delete_element_by_id('${my_id}')">${close_svg}</div></div>`
+                notification_container.innerHTML += `<div id="${my_id}" class="notification show-right-animation"><div>${text}</div><div onclick="delete_element_by_id('${my_id}')">${close_svg}</div></div>`
             }
             
             async function timer_updater() {

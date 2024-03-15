@@ -137,6 +137,21 @@ body {
     width: 300px;
 }
 
+.show-right-animation {
+    animation: showRight 0.7s;
+}
+
+.notification:last-child {
+    margin-top: 0;
+}
+
+@keyframes showRight {
+
+from {right:-25%;}
+
+to {right:0;}
+
+}
 .notification div {
     white-space: pre-wrap;
     line-height: 20px;
