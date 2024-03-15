@@ -102,6 +102,9 @@
                            </clipPath>
                            </defs>
                            </svg>`
+        const calendar_svg = `<svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M13 6.33333H1M9.66667 1V3.66667M4.33333 1V3.66667M4.2 14.3333H9.8C10.9201 14.3333 11.4802 14.3333 11.908 14.1153C12.2843 13.9236 12.5903 13.6176 12.782 13.2413C13 12.8135 13 12.2534 13 11.1333V5.53333C13 4.41323 13 3.85318 12.782 3.42535C12.5903 3.04903 12.2843 2.74307 11.908 2.55132C11.4802 2.33333 10.9201 2.33333 9.8 2.33333H4.2C3.0799 2.33333 2.51984 2.33333 2.09202 2.55132C1.71569 2.74307 1.40973 3.04903 1.21799 3.42535C1 3.85318 1 4.41323 1 5.53333V11.1333C1 12.2534 1 12.8135 1.21799 13.2413C1.40973 13.6176 1.71569 13.9236 2.09202 14.1153C2.51984 14.3333 3.0799 14.3333 4.2 14.3333Z" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>`
 
 
 
@@ -109,6 +112,7 @@
         const container = document.getElementsByClassName("container")[0]
         let active_task = undefined
 
+        let tasks = {}
         let offset_days = 0
 
         function makeid(length) {
@@ -339,6 +343,7 @@
             const is_active = task["is_active"]
             const started_at = task["started_at"]
             const stopped_at = task["stopped_at"]
+            tasks[task_id + ""] = task
             let last_el = document.getElementById(`${task_id}`)
             if (last_el) {
                 last_el.parentNode.removeChild(last_el)
@@ -356,7 +361,7 @@
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
                 const lil_time = get_lil_time_text(started_at, stopped_at)
                 const time = get_time_text(started_at, stopped_at)
-                cur_section.innerHTML += `<div id="${task_id}" class="hover-container inactive-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${time}</div></div>`
+                cur_section.innerHTML += `<div id="${task_id}" class="hover-container inactive-task" onclick="update_task_full_menu('${task_id}')" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${time}</div></div>`
             } else {
                 const hover_onmouseover = `document.getElementById('${task_id}').childNodes[2].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[2].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
@@ -443,6 +448,55 @@
                     </div>
                     <div class="row">
                         <input id="input-centered" class="gray input font-1" value="${text}">
+                    </div>
+                    <div class="row">
+                        <div onclick="update_task('${task_id}'); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="delete_task('${task_id}'); delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Удалить</div></div>
+                    </div>
+                </div>
+            </div>`
+        }
+        
+        function recount_time_text() {
+            let lil_timer = [
+                document.getElementById("input-time-first").value,
+                document.getElementById("input-time-second").value,
+            ]
+            let start_time = ((lil_timer[0].split(":")[0] - 0) * 60 + (lil_timer[0].split(":")[1] - 0)) * 60000
+            let stop_time = ((lil_timer[1].split(":")[0] - 0) * 60 + (lil_timer[1].split(":")[1] - 0)) * 60000
+            if (stop_time < start_time) {
+                stop_time += 24 * 60  * 60000
+            }
+            console.log(lil_timer, start_time, stop_time)
+            const time_text = get_time_text(start_time, stop_time)
+            document.getElementById("input-time-text").textContent = time_text
+        }
+        
+        function update_task_full_menu(task_id) {
+            const body = document.body
+            const my_id = makeid(8)
+            const text = document.getElementById(task_id).childNodes[1].textContent
+            const task = tasks[task_id + ""]
+
+            const lil_timer = get_lil_time_text(task["started_at"], task["stopped_at"]).split(" - ")
+            const time_text = get_time_text(task["started_at"], task["stopped_at"])
+            body.innerHTML += `<div id="${my_id}" class="bg">
+                <div class="centered-window">
+                    <div class="row">
+                        <div>Редактирование задачи</div>
+                        <div onclick="delete_element_by_id('${my_id}')">${close_svg}</div>
+                    </div>
+                    <div class="row">
+                        <input id="input-centered" class="gray input font-1" value="${text}">
+                    </div>
+                    <div class="row" style="justify-content: flex-start;">
+                        <input id="input-time-first" onchange="recount_time_text()" class="gray input font-2" style="width: 50px; padding: 10px; text-align: center;" value="${lil_timer[0]}">
+                        <div class="center font-2" style="width: 20px; justify-content: center;">-</div>
+                        <input id="input-time-second" onchange="recount_time_text()" class="gray input font-2" style="width: 50px; padding: 10px; text-align: center;" value="${lil_timer[1]}">
+                        <div id="input-time-text" class="center timer-text" style="width: 120px; justify-content: right;">${time_text}</div>
+                    </div>
+                    <div class="row">
+                        <div>${calendar_svg}</div>
                     </div>
                     <div class="row">
                         <div onclick="update_task('${task_id}'); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
