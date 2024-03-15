@@ -55,6 +55,12 @@ def get_tasks():
         raw_tasks.append(task.to_dict())
     return {"success": True, "tasks": raw_tasks}
 
+@app.route('/whoami', methods=['POST'])
+@login_required
+def whoami():
+    user = current_user
+    return {"success": True, "user": {"login": user.login}}
+
 @app.route('/run_task', methods=['POST'])
 @login_required
 def run_task():
