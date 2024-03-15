@@ -296,7 +296,14 @@
             let section = document.getElementById(lil_time)
             console.log(section)
             if (!section) {
-                let time_text = lil_time
+                let time_text = new Date(time).toLocaleString("ru", {
+                    month: 'long',
+                    day: 'numeric',
+                    weekday: 'short',
+                    timezone: 'UTC'
+                }).split(", ")
+                time_text = time_text[1] + ", " + time_text[0]
+                
                 if (to_day(time) === to_day(Date.now())) {
                     time_text = "Сегодня"
                 }
@@ -524,7 +531,11 @@
             const my_id = makeid(8)
             const text = document.getElementById(task_id).childNodes[1].textContent
             const task = tasks[task_id + ""]
-
+            const day_start_text = new Date(task["started_at"]).toLocaleString("ru", {
+                    month: 'long',
+                    day: 'numeric',
+                    timezone: 'UTC'
+                }) 
             const lil_timer = get_lil_time_text(task["started_at"], task["stopped_at"]).split(" - ")
             const time_text = get_time_text(task["started_at"], task["stopped_at"])
             body.innerHTML += `<div id="${my_id}" class="bg">
@@ -542,8 +553,9 @@
                         <input id="input-time-second" onchange="recount_time_text()" class="gray input font-2" style="width: 50px; padding: 10px; text-align: center;" value="${lil_timer[1]}">
                         <div id="input-time-text" class="center timer-text" style="width: 120px; justify-content: right;">${time_text}</div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="justify-content: flex-start; gap: 2px;">
                         <div>${calendar_svg}</div>
+                        <div style="color: rgba(122, 122, 122, 1); display: flex; align-items: center;">${day_start_text}</div>
                     </div>
                     <div class="row">
                         <div onclick="update_task_full('${task_id}'); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
