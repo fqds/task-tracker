@@ -102,10 +102,15 @@ def update_task():
     content = request.get_json(silent=True)
     task_id = content['task_id']
     text = content['text']
+    started_at = content['started_at'] / 1000 if 'started_at' in content else None
+    stopped_at = content['stopped_at'] / 1000 if 'stopped_at' in content else None
     user_id = current_user.id
     task = Tasks.query.filter(and_(Tasks.user_id == user_id, Tasks.id == task_id)).first()
     if not task:
         return {"success": False, "error": "record not found"}
+    if stopped_at and started_at:
+        task.started_at = datetime.fromtimestamp(started_at)
+        task.stopped_at = datetime.fromtimestamp(stopped_at)
     task.text = text
     db.session.commit()
     return {"success": True, "task": task.to_dict()}

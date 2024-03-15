@@ -413,8 +413,39 @@
             const text = document.getElementById("input-centered").value
             const url = "/update_task"
             const payload = {
-                "task_id": task_id,
+                "task_id": task_id - 0,
                 "text": text,
+            }
+            const response = await request(url, payload);
+            const data = await response.json()
+            if (data["task"]) {
+                delete_element_by_id(task_id)
+                await create_task(data["task"])
+            }
+        }
+
+        async function update_task_full(task_id) {
+            const text = document.getElementById("input-centered").value
+            const url = "/update_task"
+            const task = tasks[task_id + ""]
+            let time_first = document.getElementById("input-time-first").value.split(":")
+            time_first = ((time_first[0] - 0) * 60 + (time_first[1] - 0)) * 60000
+            let time_second = document.getElementById("input-time-second").value.split(":")
+            time_second = ((time_second[0] - 0) * 60 + (time_second[1] - 0)) * 60000
+            if (time_first > time_second) {
+                time_second += 60000 * 24 * 60
+            }
+            let started_at = to_day(task["started_at"]) + time_first
+            let stopped_at = to_day(task["started_at"]) + time_second
+            if (started_at - stopped_at == 0) {
+                add_notification(("Задачи длительностью\nменее 1 минуты не сохраняюся"))
+                return
+            }
+            const payload = {
+                "task_id": task_id - 0,
+                "text": text,
+                "started_at": started_at - 3*60*60000,
+                "stopped_at": stopped_at - 3*60*60000,
             }
             const response = await request(url, payload);
             const data = await response.json()
@@ -499,7 +530,7 @@
                         <div>${calendar_svg}</div>
                     </div>
                     <div class="row">
-                        <div onclick="update_task('${task_id}'); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="update_task_full('${task_id}'); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
                         <div onclick="delete_task('${task_id}'); delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Удалить</div></div>
                     </div>
                 </div>
