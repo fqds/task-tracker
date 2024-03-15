@@ -45,7 +45,7 @@
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14 6.66666H2M14 8.33333V5.86666C14 4.74656 14 4.1865 13.782 3.75868C13.5903 3.38236 13.2843 3.0764 12.908 2.88465C12.4802 2.66666 11.9201 2.66666 10.8 2.66666H5.2C4.0799 2.66666 3.51984 2.66666 3.09202 2.88465C2.71569 3.0764 2.40973 3.38236 2.21799 3.75868C2 4.1865 2 4.74656 2 5.86666V11.4667C2 12.5868 2 13.1468 2.21799 13.5746C2.40973 13.951 2.71569 14.2569 3.09202 14.4487C3.51984 14.6667 4.0799 14.6667 5.2 14.6667H8M10.6667 1.33333V3.99999M5.33333 1.33333V3.99999M9.66667 12.6667L11 14L14 11" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div>
+                <div onclick="today_tasks()">
                     Только сегодня
                 </div>
             </div>
@@ -414,6 +414,15 @@
                 await create_task(task)
             })
             document.getElementById("today-tasks-btn").style.display = null
+        }
+
+        function today_tasks() {
+            document.getElementById("today-tasks-btn").style.display = "none";
+            offset_days = 0
+            let sections = document.getElementsByClassName("section")
+            for (let i = sections.length - 1; i >= 2; i --) {
+                sections[i].parentNode.removeChild(sections[i])
+            }
         }
 
         async function update_task(task_id) {
