@@ -103,28 +103,18 @@
                 notification_container.innerHTML += `<div id="${my_id}" class="notification"><div>${text}</div><div onclick="delete_element_by_id('${my_id}')">${close_svg}</div></div>`
             }
             
-            async function timer_updater(id) {
+            async function timer_updater() {
                 while (true) {
-                    await new Promise(r => setTimeout(r, 1000));
-                    const timer = document.getElementById(id)
-                    if (!id) {
-                        return
+                    await new Promise(r => setTimeout(r, 800));
+                    if (!active_task) {
+                        continue
                     }
-                    let time = timer.textContent;
-                    if (time[4] === "9") {
-                        if (time[3] === "5") {
-                            if (time[1] === "9") {
-                                time = (time[0] - 0 + 1) + "0:00"
-                            } else {
-                                time = time[0] + (time[1] - 0 + 1) + ":00"
-                            }
-                        } else {
-                            time = time[0] + time[1] + ":" + (time[3] - 0 + 1) + "0"
-                        }
-                    } else {
-                        time = time[0] + time[1] + ":" + time[3] + (time[4] - 0 + 1)
-                    }
-                    timer.textContent = time
+
+                    const task_el = document.getElementById(active_task["task_id"])
+                    const lil_time = get_lil_time_text(active_task["started_at"], Date.now())
+                    const timer_text = get_timer_text(active_task["started_at"], Date.now())
+                    task_el.childNodes[2].textContent = lil_time
+                    task_el.childNodes[3].textContent = timer_text
                 }
             }
             
@@ -259,6 +249,19 @@
                 return `${start_time} - ${stop_time}`
             }
             
+            function get_timer_text(started_at, stopped_at) {
+                let time = Math.floor((stopped_at - started_at) / 1000)
+                let time_hours = Math.floor(time / 60 / 60)
+                let time_minutes = (Math.floor(time / 60 % 60) + "").padStart(2, '0')
+                let time_seconds = (time % 60 + "").padStart(2, '0')
+                if (time_hours) {
+                    time = `${time_hours}:${time_minutes}:${time_seconds}`
+                } else {
+                    time = `${time_minutes}:${time_seconds}`
+                }
+                return time
+            }
+            
             function get_time_text(started_at, stopped_at) {
                 let time = Math.floor((stopped_at - started_at) / 60000)
                 let time_hours = Math.floor(time / 60)
@@ -283,7 +286,8 @@
                     const hover_onmouseover = `document.getElementById('${task_id}').childNodes[3].style = 'display: none;'; document.getElementById('${task_id}').childNodes[4].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
                     const hover_onmouseout = `document.getElementById('${task_id}').childNodes[3].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[4].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
                     const lil_time = get_lil_time_text(started_at, Date.now())
-                    rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">00:00</div><div id="stop-button" class="center" onclick="stop_task(${task_id});" style="display: none;">${stop_svg}</div></div>`
+                    const timer_text = get_timer_text(started_at, Date.now())
+                    rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${timer_text}</div><div id="stop-button" class="center" onclick="stop_task(${task_id});" style="display: none;">${stop_svg}</div></div>`
                 } else if (stopped_at) {
                     let cur_section = get_section_by_time(started_at)
                     const hover_onmouseover = `document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
@@ -314,7 +318,7 @@
             let rn = to_day(Date.now())
             let today_section = get_section_by_time(Date.now())
             today_section.childNodes[0].innerHTML += `<div class="class="center">${new_svg}</div>`
-
+            timer_updater()
         </script>
 </body>
 </html>
