@@ -404,6 +404,33 @@
             document.getElementById("today-tasks-btn").style.display = null
         }
 
+        async function update_task(task_id) {
+            const text = document.getElementById("input-centered").value
+            const url = "/update_task"
+            const payload = {
+                "task_id": task_id,
+                "text": text,
+            }
+            const response = await request(url, payload);
+            const data = await response.json()
+            if (data["task"]) {
+                delete_element_by_id(task_id)
+                await create_task(data["task"])
+            }
+        }
+
+        async function delete_task(task_id) {
+            const url = "/delete_task"
+            const payload = {
+                "task_id": task_id,
+            }
+            const response = await request(url, payload);
+            const data = await response.json()
+            if (data["success"]) {
+                delete_element_by_id(task_id)
+            }
+        }
+        
         function update_task_menu(task_id) {
             const body = document.body
             const my_id = makeid(8)
@@ -418,8 +445,8 @@
                         <input id="input-centered" class="gray input font-1" value="${text}">
                     </div>
                     <div class="row">
-                        <div onclick="delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
-                        <div onclick="delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Удалить</div></div>
+                        <div onclick="update_task('${task_id}'); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="delete_task('${task_id}'); delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Удалить</div></div>
                     </div>
                 </div>
             </div>`

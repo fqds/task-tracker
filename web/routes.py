@@ -96,6 +96,30 @@ def stop_task():
     db.session.commit()
     return {"success": True, "task": task.to_dict()}
 
+@app.route('/update_task', methods=['POST'])
+@login_required
+def update_task():
+    content = request.get_json(silent=True)
+    task_id = content['task_id']
+    text = content['text']
+    user_id = current_user.id
+    task = Tasks.query.filter(and_(Tasks.user_id == user_id, Tasks.id == task_id)).first()
+    if not task:
+        return {"success": False, "error": "record not found"}
+    task.text = text
+    db.session.commit()
+    return {"success": True, "task": task.to_dict()}
+
+@app.route('/delete_task', methods=['POST'])
+@login_required
+def delete_task():
+    content = request.get_json(silent=True)
+    task_id = content['task_id']
+    user_id = current_user.id
+    Tasks.query.filter(and_(Tasks.user_id == user_id, Tasks.id == task_id)).delete()
+    db.session.commit()
+    return {"success": True}
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
