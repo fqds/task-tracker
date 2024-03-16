@@ -186,7 +186,7 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('hello_world'))
+    return redirect(url_for('login_page'))
 
 
 @app.route('/css/style.css', methods=['GET'])
