@@ -250,3 +250,15 @@ to {right:0;}
 .font-3 {
     font-size: 20px;
 }
+
+.hover-white:hover {
+    fill: rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 1);
+    stroke: rgba(255, 255, 255, 1);
+}
+
+.hover-white {
+    fill: #7A7A7A;
+    color: #7A7A7A;
+    stroke: #7A7A7A;
+}

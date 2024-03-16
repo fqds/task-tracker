@@ -14,15 +14,15 @@
         <div class="section">
             <div class="lil-container">
                 <input id="input" class="gray input font-1" onkeyup="new_task_enter(event)">
-                <div class="icon-container" onclick="new_task(true)">
+                <div class="icon-container hover-white" onclick="new_task(true)">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9.5 8.96533C9.5 8.48805 9.5 8.24941 9.59974 8.11618C9.68666 8.00007 9.81971 7.92744 9.96438 7.9171C10.1304 7.90525 10.3311 8.03429 10.7326 8.29239L15.4532 11.3271C15.8016 11.551 15.9758 11.663 16.0359 11.8054C16.0885 11.9298 16.0885 12.0702 16.0359 12.1946C15.9758 12.337 15.8016 12.449 15.4532 12.6729L10.7326 15.7076C10.3311 15.9657 10.1304 16.0948 9.96438 16.0829C9.81971 16.0726 9.68666 15.9999 9.59974 15.8838C9.5 15.7506 9.5 15.512 9.5 15.0347V8.96533Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9.5 8.96533C9.5 8.48805 9.5 8.24941 9.59974 8.11618C9.68666 8.00007 9.81971 7.92744 9.96438 7.9171C10.1304 7.90525 10.3311 8.03429 10.7326 8.29239L15.4532 11.3271C15.8016 11.551 15.9758 11.663 16.0359 11.8054C16.0885 11.9298 16.0885 12.0702 16.0359 12.1946C15.9758 12.337 15.8016 12.449 15.4532 12.6729L10.7326 15.7076C10.3311 15.9657 10.1304 16.0948 9.96438 16.0829C9.81971 16.0726 9.68666 15.9999 9.59974 15.8838C9.5 15.7506 9.5 15.512 9.5 15.0347V8.96533Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <div class="icon-container" onclick="new_task(false)" style="position: absolute; right: 50px">
+                <div class="icon-container hover-white" onclick="new_task(false)" style="position: absolute; right: 50px">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 7.33331V14.6666M7.33337 11H14.6667M20.1667 11C20.1667 16.0626 16.0627 20.1666 11 20.1666C5.93743 20.1666 1.83337 16.0626 1.83337 11C1.83337 5.93737 5.93743 1.83331 11 1.83331C16.0627 1.83331 20.1667 5.93737 20.1667 11Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M11 7.33331V14.6666M7.33337 11H14.6667M20.1667 11C20.1667 16.0626 16.0627 20.1666 11 20.1666C5.93743 20.1666 1.83337 16.0626 1.83337 11C1.83337 5.93737 5.93743 1.83331 11 1.83331C16.0627 1.83331 20.1667 5.93737 20.1667 11Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
             </div>
@@ -33,27 +33,27 @@
         </div>
         
         <div id="footer" class="footer">
-            <div class="footer-el" onclick="load_tasks()">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 14H14M8 2V11.3333M8 11.3333L12.6667 6.66667M8 11.3333L3.33333 6.66667" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="footer-el hover-white" onclick="load_tasks()">
+                <svg style="top: -1px;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 14H14M8 2V11.3333M8 11.3333L12.6667 6.66667M8 11.3333L3.33333 6.66667" stroke="inherit" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div>
+                <div style="color: inherit;">
                     Загрузить ещё
                 </div>
             </div>
-            <div class="footer-el" id="today-tasks-btn" style="display: none;">
+            <div class="footer-el hover-white" id="today-tasks-btn" style="display: none;">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 6.66666H2M14 8.33333V5.86666C14 4.74656 14 4.1865 13.782 3.75868C13.5903 3.38236 13.2843 3.0764 12.908 2.88465C12.4802 2.66666 11.9201 2.66666 10.8 2.66666H5.2C4.0799 2.66666 3.51984 2.66666 3.09202 2.88465C2.71569 3.0764 2.40973 3.38236 2.21799 3.75868C2 4.1865 2 4.74656 2 5.86666V11.4667C2 12.5868 2 13.1468 2.21799 13.5746C2.40973 13.951 2.71569 14.2569 3.09202 14.4487C3.51984 14.6667 4.0799 14.6667 5.2 14.6667H8M10.6667 1.33333V3.99999M5.33333 1.33333V3.99999M9.66667 12.6667L11 14L14 11" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 6.66666H2M14 8.33333V5.86666C14 4.74656 14 4.1865 13.782 3.75868C13.5903 3.38236 13.2843 3.0764 12.908 2.88465C12.4802 2.66666 11.9201 2.66666 10.8 2.66666H5.2C4.0799 2.66666 3.51984 2.66666 3.09202 2.88465C2.71569 3.0764 2.40973 3.38236 2.21799 3.75868C2 4.1865 2 4.74656 2 5.86666V11.4667C2 12.5868 2 13.1468 2.21799 13.5746C2.40973 13.951 2.71569 14.2569 3.09202 14.4487C3.51984 14.6667 4.0799 14.6667 5.2 14.6667H8M10.6667 1.33333V3.99999M5.33333 1.33333V3.99999M9.66667 12.6667L11 14L14 11" stroke="inherit" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div onclick="today_tasks()">
+                <div onclick="today_tasks()" style="color: inherit;">
                     Только сегодня
                 </div>
             </div>
-            <div class="footer-el" style="display: none;">
+            <div class="footer-el hover-white" style="display: none;">
                 <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 12.3333C2.55719 10.6817 4.67134 9.66667 7 9.66667C9.32866 9.66667 11.4428 10.6817 13 12.3333M10 4C10 5.65685 8.65685 7 7 7C5.34315 7 4 5.65685 4 4C4 2.34315 5.34315 1 7 1C8.65685 1 10 2.34315 10 4Z" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M1 12.3333C2.55719 10.6817 4.67134 9.66667 7 9.66667C9.32866 9.66667 11.4428 10.6817 13 12.3333M10 4C10 5.65685 8.65685 7 7 7C5.34315 7 4 5.65685 4 4C4 2.34315 5.34315 1 7 1C8.65685 1 10 2.34315 10 4Z" stroke="inherit" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div id="profile-text">
+                <div id="profile-text" style="color: inherit;">
                     Профиль
                 </div>
             </div>
@@ -64,18 +64,18 @@
     <script>
         var input = document.getElementById("input")
         const stop_svg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M8 9.6C8 9.03995 8 8.75992 8.10899 8.54601C8.20487 8.35785 8.35785 8.20487 8.54601 8.10899C8.75992 8 9.03995 8 9.6 8H14.4C14.9601 8 15.2401 8 15.454 8.10899C15.6422 8.20487 15.7951 8.35785 15.891 8.54601C16 8.75992 16 9.03995 16 9.6V14.4C16 14.9601 16 15.2401 15.891 15.454C15.7951 15.6422 15.6422 15.7951 15.454 15.891C15.2401 16 14.9601 16 14.4 16H9.6C9.03995 16 8.75992 16 8.54601 15.891C8.35785 15.7951 8.20487 15.6422 8.10899 15.454C8 15.2401 8 14.9601 8 14.4V9.6Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8 9.6C8 9.03995 8 8.75992 8.10899 8.54601C8.20487 8.35785 8.35785 8.20487 8.54601 8.10899C8.75992 8 9.03995 8 9.6 8H14.4C14.9601 8 15.2401 8 15.454 8.10899C15.6422 8.20487 15.7951 8.35785 15.891 8.54601C16 8.75992 16 9.03995 16 9.6V14.4C16 14.9601 16 15.2401 15.891 15.454C15.7951 15.6422 15.6422 15.7951 15.454 15.891C15.2401 16 14.9601 16 14.4 16H9.6C9.03995 16 8.75992 16 8.54601 15.891C8.35785 15.7951 8.20487 15.6422 8.10899 15.454C8 15.2401 8 14.9601 8 14.4V9.6Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>`
         const start_svg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.5 8.96533C9.5 8.48805 9.5 8.24941 9.59974 8.11618C9.68666 8.00007 9.81971 7.92744 9.96438 7.9171C10.1304 7.90525 10.3311 8.03429 10.7326 8.29239L15.4532 11.3271C15.8016 11.551 15.9758 11.663 16.0359 11.8054C16.0885 11.9298 16.0885 12.0702 16.0359 12.1946C15.9758 12.337 15.8016 12.449 15.4532 12.6729L10.7326 15.7076C10.3311 15.9657 10.1304 16.0948 9.96438 16.0829C9.81971 16.0726 9.68666 15.9999 9.59974 15.8838C9.5 15.7506 9.5 15.512 9.5 15.0347V8.96533Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.5 8.96533C9.5 8.48805 9.5 8.24941 9.59974 8.11618C9.68666 8.00007 9.81971 7.92744 9.96438 7.9171C10.1304 7.90525 10.3311 8.03429 10.7326 8.29239L15.4532 11.3271C15.8016 11.551 15.9758 11.663 16.0359 11.8054C16.0885 11.9298 16.0885 12.0702 16.0359 12.1946C15.9758 12.337 15.8016 12.449 15.4532 12.6729L10.7326 15.7076C10.3311 15.9657 10.1304 16.0948 9.96438 16.0829C9.81971 16.0726 9.68666 15.9999 9.59974 15.8838C9.5 15.7506 9.5 15.512 9.5 15.0347V8.96533Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>`
         const new_svg = `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11 7.33331V14.6666M7.33337 11H14.6667M20.1667 11C20.1667 16.0626 16.0627 20.1666 11 20.1666C5.93743 20.1666 1.83337 16.0626 1.83337 11C1.83337 5.93737 5.93743 1.83331 11 1.83331C16.0627 1.83331 20.1667 5.93737 20.1667 11Z" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11 7.33331V14.6666M7.33337 11H14.6667M20.1667 11C20.1667 16.0626 16.0627 20.1666 11 20.1666C5.93743 20.1666 1.83337 16.0626 1.83337 11C1.83337 5.93737 5.93743 1.83331 11 1.83331C16.0627 1.83331 20.1667 5.93737 20.1667 11Z" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>`
         const close_svg = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13 1L1 13M1 1L13 13" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13 1L1 13M1 1L13 13" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>`
         const save_svg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M4.66667 2V4.26667C4.66667 4.64004 4.66667 4.82672 4.73933 4.96933C4.80324 5.09477 4.90523 5.19676 5.03067 5.26067C5.17328 5.33333 5.35997 5.33333 5.73333 5.33333H10.2667C10.64 5.33333 10.8267 5.33333 10.9693 5.26067C11.0948 5.19676 11.1968 5.09477 11.2607 4.96933C11.3333 4.82672 11.3333 4.64004 11.3333 4.26667V2.66667M11.3333 14V9.73333C11.3333 9.35997 11.3333 9.17328 11.2607 9.03067C11.1968 8.90523 11.0948 8.80324 10.9693 8.73933C10.8267 8.66667 10.64 8.66667 10.2667 8.66667H5.73333C5.35997 8.66667 5.17328 8.66667 5.03067 8.73933C4.90523 8.80324 4.80324 8.90523 4.73933 9.03067C4.66667 9.17328 4.66667 9.35997 4.66667 9.73333V14M14 6.21699V10.8C14 11.9201 14 12.4802 13.782 12.908C13.5903 13.2843 13.2843 13.5903 12.908 13.782C12.4802 14 11.9201 14 10.8 14H5.2C4.0799 14 3.51984 14 3.09202 13.782C2.71569 13.5903 2.40973 13.2843 2.21799 12.908C2 12.4802 2 11.9201 2 10.8V5.2C2 4.0799 2 3.51984 2.21799 3.09202C2.40973 2.71569 2.71569 2.40973 3.09202 2.21799C3.51984 2 4.0799 2 5.2 2H9.78301C10.1091 2 10.2722 2 10.4256 2.03684C10.5617 2.0695 10.6918 2.12337 10.811 2.19648C10.9456 2.27894 11.0609 2.39424 11.2915 2.62484L13.3752 4.7085C13.6058 4.9391 13.7211 5.0544 13.8035 5.18895C13.8766 5.30825 13.9305 5.43831 13.9632 5.57436C14 5.72781 14 5.89087 14 6.21699Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
@@ -166,7 +166,7 @@
             const notification_container = document.getElementById("notification-container")
             clear_notification_animations()
             const my_id = makeid(8)
-            notification_container.innerHTML += `<div id="${my_id}" class="notification show-right-animation"><div>${text}</div><div onclick="delete_element_by_id('${my_id}')">${close_svg}</div></div>`
+            notification_container.innerHTML += `<div id="${my_id}" class="notification show-right-animation"><div>${text}</div><div class="hover-white" onclick="delete_element_by_id('${my_id}')">${close_svg}</div></div>`
             
             await new Promise(r => setTimeout(r, 1000));
             clear_notification_animations()
@@ -292,6 +292,7 @@
         }
 
         function get_section_by_time(time) {
+            time += 1000 * 60 * 60 * 3
             const lil_time = to_day(time)
             let section = document.getElementById(lil_time)
             console.log(section)
@@ -304,7 +305,7 @@
                 }).split(", ")
                 time_text = time_text[1] + ", " + time_text[0]
                 
-                if (to_day(time) === to_day(Date.now())) {
+                if (to_day(time) === to_day(Date.now() + 1000 * 60 * 60 * 3)) {
                     time_text = "Сегодня"
                 }
                 const container = document.getElementById("container-main")
@@ -368,7 +369,7 @@
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[3].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[4].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
                 const lil_time = get_lil_time_text(started_at, Date.now())
                 const timer_text = get_timer_text(started_at, Date.now())
-                rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover" onclick="update_task_menu('${task_id}')"></div><div class="text" onclick="update_task_menu('${task_id}')">${text}</div><div class="lil-timer" onclick="update_task_menu('${task_id}')">${lil_time}</div><div id="timer" class="timer-text">${timer_text}</div><div id="stop-button" class="center" onclick="stop_task(${task_id});" style="display: none;">${stop_svg}</div></div>`
+                rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover" onclick="update_task_menu('${task_id}')"></div><div class="text" onclick="update_task_menu('${task_id}')">${text}</div><div class="lil-timer" onclick="update_task_menu('${task_id}')">${lil_time}</div><div id="timer" class="timer-text">${timer_text}</div><div id="stop-button" class="center hover-white" onclick="stop_task(${task_id});" style="display: none;">${stop_svg}</div></div>`
             } else if (stopped_at) {
                 let cur_section = get_section_by_time(started_at)
                 const hover_onmouseover = `document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
@@ -379,7 +380,7 @@
             } else {
                 const hover_onmouseover = `document.getElementById('${task_id}').childNodes[2].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[2].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
-                rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover" onclick="update_task_menu('${task_id}')"></div><div class="text" onclick="update_task_menu('${task_id}')">${text}</div><div id="start-button" class="center" style="display: none;" onclick="run_task(${task_id});">${start_svg}</div></div>`
+                rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover" onclick="update_task_menu('${task_id}')"></div><div class="text" onclick="update_task_menu('${task_id}')">${text}</div><div id="start-button" class="center hover-white" style="display: none;" onclick="run_task(${task_id});">${start_svg}</div></div>`
             }
 
         }            
@@ -498,7 +499,7 @@
                 <div class="centered-window">
                     <div class="row">
                         <div>Редактирование задачи</div>
-                        <div onclick="delete_element_by_id('${my_id}')">${close_svg}</div>
+                        <div class="hover-white" onclick="delete_element_by_id('${my_id}')">${close_svg}</div>
                     </div>
                     <div class="row">
                         <input id="input-centered" class="gray input font-1" value="${text}">
@@ -542,7 +543,7 @@
                 <div class="centered-window">
                     <div class="row">
                         <div>Редактирование задачи</div>
-                        <div onclick="delete_element_by_id('${my_id}')">${close_svg}</div>
+                        <div class="hover-white" onclick="delete_element_by_id('${my_id}')">${close_svg}</div>
                     </div>
                     <div class="row">
                         <input id="input-centered" class="gray input font-1" value="${text}">
