@@ -520,6 +520,9 @@
                 }
                 delete_element_by_id(task_id)
             }
+            
+            let cur_section = get_section_by_time(tasks[task_id + ""]["started_at"])
+            update_section_time(cur_section)
         }
         
         function update_task_menu(task_id) {
@@ -731,6 +734,7 @@
         get_tasks()
         let today_section = get_section_by_time(Date_now())
         today_section.parentNode.childNodes[0].childNodes[0].innerHTML += `<div class="center hover-white" onclick="new_task_full_menu()">${new_svg}</div>`
+        update_section_time(today_section)
         timer_updater()
     </script>
 </body>
