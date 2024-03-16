@@ -31,14 +31,14 @@ def new_task():
 
     if is_started:
         is_active = True
-        started_at = datetime.now()
+        started_at = datetime.now() + timedelta(hours=3)
     elif not (started_at and stopped_at):
         is_active = False
         started_at = None
     else:
         is_active = False
     
-    task = Tasks(user_id=user_id, text=text, created_at=datetime.now(), is_active=is_active, started_at=started_at, stopped_at=stopped_at)
+    task = Tasks(user_id=user_id, text=text, created_at=datetime.now() + timedelta(hours=3), is_active=is_active, started_at=started_at, stopped_at=stopped_at)
     db.session.add(task)
     db.session.commit()
     
@@ -57,9 +57,9 @@ def get_tasks():
     user_id = current_user.id
 
     if length_days != None and offset_days != None:
-        tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, Tasks.started_at >= date.today() - timedelta(days=offset_days + length_days), Tasks.started_at <= date.today() - timedelta(days=offset_days)))
+        tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, Tasks.started_at > date.today() - timedelta(days=offset_days + length_days, hours=3), Tasks.started_at <= date.today() - timedelta(days=offset_days, hours=3))).order_by(Tasks.started_at.desc())
     else:
-        tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, or_(Tasks.is_active == True, Tasks.started_at == None, and_(Tasks.started_at >= date.today()))))
+        tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, or_(Tasks.is_active == True, Tasks.started_at == None, and_(Tasks.started_at > date.today() - timedelta(hours=3))))).order_by(Tasks.started_at.desc())
     
     raw_tasks = []
     for task in tasks:
@@ -82,7 +82,7 @@ def run_task():
     if not task:
         return {"success": False, "error": "record not found"}
     task.is_active = True
-    task.started_at = datetime.now()
+    task.started_at = datetime.now() + timedelta(hours=3)
     db.session.commit()
     return {"success": True, "task": task.to_dict()}
 
@@ -96,7 +96,7 @@ def stop_task():
     if not task:
         return {"success": False, "error": "record not found"}
     task.is_active = False
-    task.stopped_at = datetime.now()
+    task.stopped_at = datetime.now() + timedelta(hours=3)
     db.session.commit()
     return {"success": True, "task": task.to_dict()}
 

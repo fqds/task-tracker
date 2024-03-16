@@ -183,8 +183,8 @@
                 }
 
                 const task_el = document.getElementById(active_task["task_id"])
-                const lil_time = get_lil_time_text(active_task["started_at"], Date.now())
-                const timer_text = get_timer_text(active_task["started_at"], Date.now())
+                const lil_time = get_lil_time_text(active_task["started_at"], Date_now())
+                const timer_text = get_timer_text(active_task["started_at"], Date_now())
                 task_el.childNodes[2].textContent = lil_time
                 task_el.childNodes[3].textContent = timer_text
             }
@@ -252,7 +252,7 @@
         }
         
         async function stop_task(task_id) {
-            if (Date.now() - active_task["started_at"] - 60 * 1000 < 0) {
+            if (Date_now() - active_task["started_at"] - 60000 < 0) {
                 add_notification("Задачи длительностью\nменее 1 минуты не сохраняюся")
                 return
             }
@@ -295,7 +295,6 @@
         }
 
         function get_section_by_time(time) {
-            time += 1000 * 60 * 60 * 3
             const lil_time = to_day(time)
             let section = document.getElementById(lil_time)
             console.log(section)
@@ -308,7 +307,7 @@
                 }).split(", ")
                 time_text = time_text[1] + ", " + time_text[0]
                 
-                if (to_day(time) === to_day(Date.now() + 1000 * 60 * 60 * 3)) {
+                if (to_day(time) === to_day(Date_now())) {
                     time_text = "Сегодня"
                 }
                 const container = document.getElementById("container-main")
@@ -319,8 +318,6 @@
         }
         
         function get_lil_time_text(started_at, stopped_at) {
-            started_at += 1000 * 60 * 60 * 3
-            stopped_at += 1000 * 60 * 60 * 3
             let start_time = Math.floor((started_at - to_day(started_at)) / 60000)
             let start_minutes = (start_time % 60 + "").padStart(2, '0')
             start_time = `${Math.floor(start_time/60)}:${start_minutes}` 
@@ -370,8 +367,8 @@
                 active_task = task
                 const hover_onmouseover = `document.getElementById('${task_id}').childNodes[3].style = 'display: none;'; document.getElementById('${task_id}').childNodes[4].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[3].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[4].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
-                const lil_time = get_lil_time_text(started_at, Date.now())
-                const timer_text = get_timer_text(started_at, Date.now())
+                const lil_time = get_lil_time_text(started_at, Date_now())
+                const timer_text = get_timer_text(started_at, Date_now())
                 rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover" onclick="update_task_menu('${task_id}')"></div><div class="text" onclick="update_task_menu('${task_id}')">${text}</div><div class="lil-timer" onclick="update_task_menu('${task_id}')">${lil_time}</div><div id="timer" class="timer-text">${timer_text}</div><div id="stop-button" class="center hover-white" onclick="stop_task(${task_id});" style="display: none;">${stop_svg}</div></div>`
             } else if (stopped_at) {
                 let cur_section = get_section_by_time(started_at)
@@ -409,6 +406,10 @@
                 profile.textContent = data["user"]["login"]
                 profile.parentElement.style.display = null
             }
+        }
+
+        function Date_now() {
+            return new Date(Date.now() + 60000 * 60 * 3)
         }
         
         async function load_tasks() {
@@ -471,8 +472,8 @@
             const payload = {
                 "task_id": task_id - 0,
                 "text": text,
-                "started_at": started_at - 3*60*60000,
-                "stopped_at": stopped_at - 3*60*60000,
+                "started_at": started_at,
+                "stopped_at": stopped_at,
             }
             const response = await request(url, payload);
             const data = await response.json()
@@ -579,16 +580,16 @@
             if (time_first > time_second) {
                 time_second += 60000 * 24 * 60
             }
-            let started_at = to_day(Date.now()) + time_first
-            let stopped_at = to_day(Date.now()) + time_second
+            let started_at = to_day(Date_now()) + time_first
+            let stopped_at = to_day(Date_now()) + time_second
             if (started_at - stopped_at == 0) {
                 add_notification(("Задачи длительностью\nменее 1 минуты не сохраняюся"))
                 return
             }
             const payload = {
                 "text": text,
-                "started_at": started_at - 3*60*60000,
-                "stopped_at": stopped_at - 3*60*60000,
+                "started_at": started_at,
+                "stopped_at": stopped_at,
             }
             const response = await request(url, payload);
             const data = await response.json()
@@ -641,7 +642,7 @@
             const body = document.body
             const my_id = makeid(8)
             const text = ""
-            const day_start_text = new Date(to_day(Date.now())).toLocaleString("ru", {
+            const day_start_text = new Date(to_day(Date_now())).toLocaleString("ru", {
                     month: 'long',
                     day: 'numeric',
                     timezone: 'UTC'
@@ -676,7 +677,7 @@
         
         whoami()
         get_tasks()
-        let today_section = get_section_by_time(Date.now())
+        let today_section = get_section_by_time(Date_now())
         today_section.childNodes[0].innerHTML += `<div class="center hover-white" onclick="new_task_full_menu()">${new_svg}</div>`
         timer_updater()
     </script>
