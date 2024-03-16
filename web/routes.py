@@ -59,7 +59,7 @@ def get_tasks():
     if length_days != None and offset_days != None:
         tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, Tasks.started_at > date.today() - timedelta(days=offset_days + length_days, hours=3), Tasks.started_at <= date.today() - timedelta(days=offset_days, hours=3))).order_by(Tasks.started_at.desc())
     else:
-        tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, or_(Tasks.is_active == True, Tasks.started_at == None, and_(Tasks.started_at > date.today() - timedelta(hours=3))))).order_by(Tasks.started_at)
+        tasks = Tasks.query.filter(and_(Tasks.user_id == user_id, or_(Tasks.is_active == True, Tasks.started_at == None, and_(Tasks.started_at > date.today() - timedelta(hours=3))))).order_by(Tasks.started_at.desc())
     
     raw_tasks = []
     for task in tasks:
