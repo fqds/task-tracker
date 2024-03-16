@@ -328,6 +328,7 @@
         }
         
         function get_timer_text(started_at, stopped_at) {
+            console.log(started_at, stopped_at)
             let time = Math.floor((stopped_at - started_at) / 1000)
             let time_hours = Math.floor(time / 60 / 60)
             let time_minutes = (Math.floor(time / 60 % 60) + "").padStart(2, '0')
@@ -338,10 +339,10 @@
                 time = `${time_minutes}:${time_seconds}`
             }
             time 
-            if (time.slice(0, 1) == "-") {
-                return "00:00"
-            }
-            return time
+            // if (time.slice(0, 1) == "-") {
+            //     return "00:00"
+            // }
+            // return time
         }
         
         function get_time_text(started_at, stopped_at) {
