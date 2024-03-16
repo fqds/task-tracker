@@ -22,7 +22,9 @@ def main():
 @login_required
 def new_task():
     content = request.get_json(silent=True)
-    is_started = content['is_started']
+    is_started = content['is_started'] if 'is_started' in content else None
+    started_at = datetime.fromtimestamp(content['started_at'] / 1000) if 'started_at' in content else None
+    stopped_at = datetime.fromtimestamp(content['stopped_at'] / 1000) if 'stopped_at' in content else None
     text = content['text']
     
     user_id = current_user.id
@@ -30,11 +32,13 @@ def new_task():
     if is_started:
         is_active = True
         started_at = datetime.now()
-    else:
+    elif not (started_at and stopped_at):
         is_active = False
         started_at = None
+    else:
+        is_active = False
     
-    task = Tasks(user_id=user_id, text=text, created_at=datetime.now(), is_active=is_active, started_at=started_at)
+    task = Tasks(user_id=user_id, text=text, created_at=datetime.now(), is_active=is_active, started_at=started_at, stopped_at=stopped_at)
     db.session.add(task)
     db.session.commit()
     

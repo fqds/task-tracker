@@ -344,9 +344,9 @@
             let time = Math.floor((stopped_at - started_at) / 60000)
             let time_hours = Math.floor(time / 60)
             if (time_hours) {
-                time = `${time_hours} Ч ${time % 60} М`
+                time = `${time_hours} ч ${time % 60} м`
             } else {
-                time = `${time % 60} М`
+                time = `${time % 60} м`
             }
             return time
         }
@@ -566,11 +566,75 @@
             </div>`
         }
         
+        async function new_task_full() {
+            const text = document.getElementById("input-centered").value
+            const url = "/new_task"
+            let time_first = document.getElementById("input-time-first").value.split(":")
+            time_first = ((time_first[0] - 0) * 60 + (time_first[1] - 0)) * 60000
+            let time_second = document.getElementById("input-time-second").value.split(":")
+            time_second = ((time_second[0] - 0) * 60 + (time_second[1] - 0)) * 60000
+            if (time_first > time_second) {
+                time_second += 60000 * 24 * 60
+            }
+            let started_at = to_day(Date.now()) + time_first
+            let stopped_at = to_day(Date.now()) + time_second
+            if (started_at - stopped_at == 0) {
+                add_notification(("Задачи длительностью\nменее 1 минуты не сохраняюся"))
+                return
+            }
+            const payload = {
+                "text": text,
+                "started_at": started_at - 3*60*60000,
+                "stopped_at": stopped_at - 3*60*60000,
+            }
+            const response = await request(url, payload);
+            const data = await response.json()
+            if (data["task"]) {
+                await create_task(data["task"])
+            }
+        }
+        
+        function new_task_full_menu() {
+            const body = document.body
+            const my_id = makeid(8)
+            const text = ""
+            const day_start_text = new Date(to_day(Date.now())).toLocaleString("ru", {
+                    month: 'long',
+                    day: 'numeric',
+                    timezone: 'UTC'
+                }) 
+            const lil_timer = ["0:00", "0:10"]
+            const time_text = "10 м"
+            body.innerHTML += `<div id="${my_id}" class="bg">
+                <div class="centered-window">
+                    <div class="row">
+                        <div>Добавление новой задачи</div>
+                        <div class="hover-white" onclick="delete_element_by_id('${my_id}')">${close_svg}</div>
+                    </div>
+                    <div class="row">
+                        <input id="input-centered" class="gray input font-1" value="${text}">
+                    </div>
+                    <div class="row" style="justify-content: flex-start;">
+                        <input id="input-time-first" onchange="recount_time_text()" class="gray input font-2" style="width: 50px; padding: 10px; text-align: center;" value="${lil_timer[0]}">
+                        <div class="center font-2" style="width: 20px; justify-content: center;">-</div>
+                        <input id="input-time-second" onchange="recount_time_text()" class="gray input font-2" style="width: 50px; padding: 10px; text-align: center;" value="${lil_timer[1]}">
+                        <div id="input-time-text" class="center timer-text" style="width: 120px; justify-content: right;">${time_text}</div>
+                    </div>
+                    <div class="row" style="justify-content: flex-start; gap: 2px;">
+                        <div>${calendar_svg}</div>
+                        <div style="color: rgba(122, 122, 122, 1); display: flex; align-items: center;">${day_start_text}</div>
+                    </div>
+                    <div class="row">
+                        <div onclick="new_task_full(); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                    </div>
+                </div>
+            </div>`
+        }
+        
         whoami()
         get_tasks()
-        let rn = to_day(Date.now())
         let today_section = get_section_by_time(Date.now())
-        today_section.childNodes[0].innerHTML += `<div class="class="center">${new_svg}</div>`
+        today_section.childNodes[0].innerHTML += `<div class="center hover-white" onclick="new_task_full_menu()">${new_svg}</div>`
         timer_updater()
     </script>
 </body>
