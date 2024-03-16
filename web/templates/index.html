@@ -311,7 +311,7 @@
                     time_text = "Сегодня"
                 }
                 const container = document.getElementById("container-main")
-                container.innerHTML += `<div id="${lil_time}" class="section"><div class="lil-container" style="justify-content: normal"><div class="text font-3" style="width: auto; margin-right: 13px;">${time_text}</div></div><div></div></div>`
+                container.innerHTML += `<div id="${lil_time}" class="section"><div class="lil-container"><div style="justify-content: normal; display: flex;" ><div class="text font-3" style="width: auto; margin-right: 13px;">${time_text}</div></div><div class="timer-text font-3"></div></div><div></div></div>`
                 section = document.getElementById(lil_time)
             }
             return section.childNodes[1]
@@ -390,13 +390,13 @@
                     }
                 })
                 if (task_before) {
-                    console.log("task_before:", task_before)
                     let tmp_el = document.createElement('div')
                     tmp_el.innerHTML = `<div id="${task_id}" class="hover-container inactive-task" onclick="update_task_full_menu('${task_id}')" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${time}</div></div>`
                     task_before.parentNode.insertBefore(tmp_el.childNodes[0], task_before)
                 } else {
                     cur_section.innerHTML += `<div id="${task_id}" class="hover-container inactive-task" onclick="update_task_full_menu('${task_id}')" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${time}</div></div>`
                 }
+                update_section_time(cur_section)
             } else {
                 const hover_onmouseover = `document.getElementById('${task_id}').childNodes[2].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[2].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
@@ -695,10 +695,35 @@
             </div>`
         }
         
+        function update_section_time(section) {
+            let minutes = 0
+            console.log("section.childNodes:", section.childNodes)
+            section.childNodes.forEach(el => {
+                let temp = el.childNodes[3].textContent
+                temp = temp.split(" ч ")
+                if (temp.length === 2) {
+                    minutes += (temp[0] - 0) * 60
+                    temp = temp[1]
+                } else {
+                    temp = temp[0]
+                }
+                temp = temp.split(" м")                
+                minutes += temp[0] - 0
+            })
+
+            let text = `${minutes} м`
+            if (minutes >= 60) {
+                text = `${Math.floor(minutes / 60)} ч ${minutes % 60} м`
+            }
+            
+            section.parentNode.childNodes[0].childNodes[1].textContent = text
+
+        }
+        
         whoami()
         get_tasks()
         let today_section = get_section_by_time(Date_now())
-        today_section.parentNode.childNodes[0].innerHTML += `<div class="center hover-white" onclick="new_task_full_menu()">${new_svg}</div>`
+        today_section.parentNode.childNodes[0].childNodes[0].innerHTML += `<div class="center hover-white" onclick="new_task_full_menu()">${new_svg}</div>`
         timer_updater()
     </script>
 </body>
