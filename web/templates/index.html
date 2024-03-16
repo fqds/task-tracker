@@ -33,7 +33,7 @@
         </div>
         
         <div id="footer" class="footer">
-            <div class="footer-el hover-white" onclick="load_tasks()">
+            <div onclick="load_tasks()" class="footer-el hover-white">
                 <svg style="top: -1px;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 14H14M8 2V11.3333M8 11.3333L12.6667 6.66667M8 11.3333L3.33333 6.66667" stroke="inherit" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -41,15 +41,15 @@
                     Загрузить ещё
                 </div>
             </div>
-            <div class="footer-el hover-white" id="today-tasks-btn" style="display: none;">
+            <div onclick="today_tasks()" class="footer-el hover-white" id="today-tasks-btn" style="display: none;">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14 6.66666H2M14 8.33333V5.86666C14 4.74656 14 4.1865 13.782 3.75868C13.5903 3.38236 13.2843 3.0764 12.908 2.88465C12.4802 2.66666 11.9201 2.66666 10.8 2.66666H5.2C4.0799 2.66666 3.51984 2.66666 3.09202 2.88465C2.71569 3.0764 2.40973 3.38236 2.21799 3.75868C2 4.1865 2 4.74656 2 5.86666V11.4667C2 12.5868 2 13.1468 2.21799 13.5746C2.40973 13.951 2.71569 14.2569 3.09202 14.4487C3.51984 14.6667 4.0799 14.6667 5.2 14.6667H8M10.6667 1.33333V3.99999M5.33333 1.33333V3.99999M9.66667 12.6667L11 14L14 11" stroke="inherit" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div onclick="today_tasks()" style="color: inherit;">
+                <div style="color: inherit;">
                     Только сегодня
                 </div>
             </div>
-            <div class="footer-el hover-white" style="display: none;">
+            <div onclick="user_profile_menu()" class="footer-el hover-white" style="display: none;">
                 <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 12.3333C2.55719 10.6817 4.67134 9.66667 7 9.66667C9.32866 9.66667 11.4428 10.6817 13 12.3333M10 4C10 5.65685 8.65685 7 7 7C5.34315 7 4 5.65685 4 4C4 2.34315 5.34315 1 7 1C8.65685 1 10 2.34315 10 4Z" stroke="inherit" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -592,6 +592,30 @@
             if (data["task"]) {
                 await create_task(data["task"])
             }
+        }
+
+        function user_profile_menu() {
+            const body = document.body
+            const my_id = makeid(8)
+            const login = document.getElementById("profile-text").textContent
+            body.innerHTML += `<div id="${my_id}" class="bg">
+                <div class="centered-window">
+                    <div class="row">
+                        <div>Редактирование задачи</div>
+                        <div class="hover-white" onclick="delete_element_by_id('${my_id}')">${close_svg}</div>
+                    </div>
+                    <div class="row">
+                        <input id="input-login" class="gray input font-1" value="${login}">
+                    </div>
+                    <div class="row" style="justify-content: flex-start;">
+                        <input id="input-password" placeholder="********" class="gray input font-1">
+                    </div>
+                    <div class="row">
+                        <div onclick="delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Выйти</div></div>
+                    </div>
+                </div>
+            </div>`
         }
         
         function new_task_full_menu() {
