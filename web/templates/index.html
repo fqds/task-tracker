@@ -337,6 +337,10 @@
             } else {
                 time = `${time_minutes}:${time_seconds}`
             }
+            time 
+            if (time.slice(0, 1) == "-") {
+                return "00:00"
+            }
             return time
         }
         
@@ -372,8 +376,8 @@
                 const hover_onmouseover = `document.getElementById('${task_id}').childNodes[3].style = 'display: none;'; document.getElementById('${task_id}').childNodes[4].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[3].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[4].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
                 const lil_time = get_lil_time_text(started_at, Date_now())
-                // const timer_text = get_timer_text(started_at, Date_now())
-                rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover" onclick="update_task_menu('${task_id}')"></div><div class="text" onclick="update_task_menu('${task_id}')">${text}</div><div class="lil-timer" onclick="update_task_menu('${task_id}')">${lil_time}</div><div id="timer" class="timer-text"></div><div id="stop-button" class="center hover-white" onclick="stop_task(${task_id});" style="display: none;">${stop_svg}</div></div>`
+                const timer_text = get_timer_text(started_at, Date_now())
+                rn_section.innerHTML += `<div id="${task_id}" class="hover-container active-task" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover" onclick="update_task_menu('${task_id}')"></div><div class="text" onclick="update_task_menu('${task_id}')">${text}</div><div class="lil-timer" onclick="update_task_menu('${task_id}')">${lil_time}</div><div id="timer" class="timer-text">${timer_text}</div><div id="stop-button" class="center hover-white" onclick="stop_task(${task_id});" style="display: none;">${stop_svg}</div></div>`
             } else if (stopped_at) {
                 let cur_section = get_section_by_time(started_at)
                 const hover_onmouseover = `document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
