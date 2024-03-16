@@ -257,8 +257,33 @@ to {right:0;}
     stroke: rgba(255, 255, 255, 1);
 }
 
+.hover-white.btn:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
 .hover-white {
     fill: #7A7A7A;
     color: #7A7A7A;
     stroke: #7A7A7A;
+}
+
+.hover-black {
+    fill: #7A7A7A;
+    color: #7A7A7A;
+    stroke: #7A7A7A;
+}
+
+.hover-black.btn {
+    border-color: #7A7A7A;
+}
+
+.hover-black.btn:hover {
+    border-color: rgba(255, 255, 255, 1);
+    background-color: rgba(217, 217, 217, 0.05);
+}
+
+.hover-black:hover {
+    fill: rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 1);
+    stroke: rgba(255, 255, 255, 1);
 }

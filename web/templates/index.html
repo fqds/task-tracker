@@ -83,7 +83,7 @@
         const trash_svg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                            <g clip-path="url(#clip0_1_244)">
                            <g filter="url(#filter0_d_1_244)">
-                           <path d="M10.6667 4V3.46667C10.6667 2.71993 10.6667 2.34656 10.5213 2.06135C10.3935 1.81047 10.1895 1.60649 9.93865 1.47866C9.65344 1.33334 9.28007 1.33334 8.53333 1.33334H7.46667C6.71993 1.33334 6.34656 1.33334 6.06135 1.47866C5.81046 1.60649 5.60649 1.81047 5.47866 2.06135C5.33333 2.34656 5.33333 2.71993 5.33333 3.46667V4M6.66667 7.66667V11M9.33333 7.66667V11M2 4H14M12.6667 4V11.4667C12.6667 12.5868 12.6667 13.1468 12.4487 13.5747C12.2569 13.951 11.951 14.2569 11.5746 14.4487C11.1468 14.6667 10.5868 14.6667 9.46667 14.6667H6.53333C5.41323 14.6667 4.85318 14.6667 4.42535 14.4487C4.04903 14.2569 3.74307 13.951 3.55132 13.5747C3.33333 13.1468 3.33333 12.5868 3.33333 11.4667V4" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round" shape-rendering="crispEdges"/>
+                           <path d="M10.6667 4V3.46667C10.6667 2.71993 10.6667 2.34656 10.5213 2.06135C10.3935 1.81047 10.1895 1.60649 9.93865 1.47866C9.65344 1.33334 9.28007 1.33334 8.53333 1.33334H7.46667C6.71993 1.33334 6.34656 1.33334 6.06135 1.47866C5.81046 1.60649 5.60649 1.81047 5.47866 2.06135C5.33333 2.34656 5.33333 2.71993 5.33333 3.46667V4M6.66667 7.66667V11M9.33333 7.66667V11M2 4H14M12.6667 4V11.4667C12.6667 12.5868 12.6667 13.1468 12.4487 13.5747C12.2569 13.951 11.951 14.2569 11.5746 14.4487C11.1468 14.6667 10.5868 14.6667 9.46667 14.6667H6.53333C5.41323 14.6667 4.85318 14.6667 4.42535 14.4487C4.04903 14.2569 3.74307 13.951 3.55132 13.5747C3.33333 13.1468 3.33333 12.5868 3.33333 11.4667V4" stroke="#inherit" stroke-linecap="round" stroke-linejoin="round" shape-rendering="crispEdges"/>
                            </g>
                            </g>
                            <defs>
@@ -105,6 +105,9 @@
         const calendar_svg = `<svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M13 6.33333H1M9.66667 1V3.66667M4.33333 1V3.66667M4.2 14.3333H9.8C10.9201 14.3333 11.4802 14.3333 11.908 14.1153C12.2843 13.9236 12.5903 13.6176 12.782 13.2413C13 12.8135 13 12.2534 13 11.1333V5.53333C13 4.41323 13 3.85318 12.782 3.42535C12.5903 3.04903 12.2843 2.74307 11.908 2.55132C11.4802 2.33333 10.9201 2.33333 9.8 2.33333H4.2C3.0799 2.33333 2.51984 2.33333 2.09202 2.55132C1.71569 2.74307 1.40973 3.04903 1.21799 3.42535C1 3.85318 1 4.41323 1 5.53333V11.1333C1 12.2534 1 12.8135 1.21799 13.2413C1.40973 13.6176 1.71569 13.9236 2.09202 14.1153C2.51984 14.3333 3.0799 14.3333 4.2 14.3333Z" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
                               </svg>`
+        const logout_svg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5.33333L14.6667 8M14.6667 8L12 10.6667M14.6667 8H6.00001M10 2.80269C9.15018 2.29218 8.16351 2 7.11112 2C3.92014 2 1.33334 4.68629 1.33334 8C1.33334 11.3137 3.92014 14 7.11112 14C8.16351 14 9.15018 13.7078 10 13.1973" stroke="inherit" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>`
 
 
 
@@ -505,8 +508,8 @@
                         <input id="input-centered" class="gray input font-1" value="${text}">
                     </div>
                     <div class="row">
-                        <div onclick="update_task('${task_id}'); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
-                        <div onclick="delete_task('${task_id}'); delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Удалить</div></div>
+                        <div onclick="update_task('${task_id}'); delete_element_by_id('${my_id}')" class="white btn hover-white" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="delete_task('${task_id}'); delete_element_by_id('${my_id}')" class="black btn hover-black" style="width: 106px">${trash_svg}<div style="color: inherit;">Удалить</div></div>
                     </div>
                 </div>
             </div>`
@@ -559,8 +562,8 @@
                         <div style="color: rgba(122, 122, 122, 1); display: flex; align-items: center;">${day_start_text}</div>
                     </div>
                     <div class="row">
-                        <div onclick="update_task_full('${task_id}'); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
-                        <div onclick="delete_task('${task_id}'); delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Удалить</div></div>
+                        <div onclick="update_task_full('${task_id}'); delete_element_by_id('${my_id}')" class="white btn hover-white" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="delete_task('${task_id}'); delete_element_by_id('${my_id}')" class="black btn hover-black" style="width: 106px">${trash_svg}<div style="color: inherit;">Удалить</div></div>
                     </div>
                 </div>
             </div>`
@@ -627,8 +630,8 @@
                         <input id="input-password" placeholder="********" class="gray input font-1">
                     </div>
                     <div class="row">
-                        <div onclick="user_profile_update(); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
-                        <div onclick="delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Выйти</div></div>
+                        <div onclick="user_profile_update(); delete_element_by_id('${my_id}')" class="white btn hover-white" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="delete_element_by_id('${my_id}')" class="black btn hover-black" style="width: 106px">${logout_svg}<div style="color: inherit;">Выйти</div></div>
                     </div>
                 </div>
             </div>`
@@ -665,7 +668,7 @@
                         <div style="color: rgba(122, 122, 122, 1); display: flex; align-items: center;">${day_start_text}</div>
                     </div>
                     <div class="row">
-                        <div onclick="new_task_full(); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="new_task_full(); delete_element_by_id('${my_id}')" class="white btn hover-white" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
                     </div>
                 </div>
             </div>`
