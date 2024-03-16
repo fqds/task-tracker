@@ -311,10 +311,10 @@
                     time_text = "Сегодня"
                 }
                 const container = document.getElementById("container-main")
-                container.innerHTML += `<div id="${lil_time}" class="section"><div class="lil-container" style="justify-content: normal"><div class="text font-3" style="width: auto; margin-right: 13px;">${time_text}</div></div></div>`
+                container.innerHTML += `<div id="${lil_time}" class="section"><div class="lil-container" style="justify-content: normal"><div class="text font-3" style="width: auto; margin-right: 13px;">${time_text}</div></div><div></div></div>`
                 section = document.getElementById(lil_time)
             }
-            return section
+            return section.childNodes[1]
         }
         
         function get_lil_time_text(started_at, stopped_at) {
@@ -351,6 +351,10 @@
             return time
         }
         
+        function insertAfter(referenceNode, newNode) {
+            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+        }
+
         async function create_task(task) {
             const rn_section = document.getElementById("rn_section")
             const task_id = task["task_id"]
@@ -376,7 +380,23 @@
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
                 const lil_time = get_lil_time_text(started_at, stopped_at)
                 const time = get_time_text(started_at, stopped_at)
-                cur_section.innerHTML += `<div id="${task_id}" class="hover-container inactive-task" onclick="update_task_full_menu('${task_id}')" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${time}</div></div>`
+                var task_before = undefined
+                cur_section.childNodes.forEach(async el => {
+                    if (!task_before) {
+                        let this_task = tasks[el.id + ""]
+                        if (this_task["started_at"] < started_at) {
+                            task_before = el
+                        }
+                    }
+                })
+                if (task_before) {
+                    console.log("task_before:", task_before)
+                    let tmp_el = document.createElement('div')
+                    tmp_el.innerHTML = `<div id="${task_id}" class="hover-container inactive-task" onclick="update_task_full_menu('${task_id}')" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${time}</div></div>`
+                    task_before.parentNode.insertBefore(tmp_el.childNodes[0], task_before)
+                } else {
+                    cur_section.innerHTML += `<div id="${task_id}" class="hover-container inactive-task" onclick="update_task_full_menu('${task_id}')" onmouseover="${hover_onmouseover}" onmouseout="${hover_onmouseout}"><div class="hover"></div><div class="text">${text}</div><div class="lil-timer">${lil_time}</div><div id="timer" class="timer-text">${time}</div></div>`
+                }
             } else {
                 const hover_onmouseover = `document.getElementById('${task_id}').childNodes[2].style = 'display: flex;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0.08);'`
                 const hover_onmouseout = `document.getElementById('${task_id}').childNodes[2].style = 'display: none;'; document.getElementById('${task_id}').childNodes[0].style = 'background-color: rgba(255, 255, 255, 0);'`
@@ -678,7 +698,7 @@
         whoami()
         get_tasks()
         let today_section = get_section_by_time(Date_now())
-        today_section.childNodes[0].innerHTML += `<div class="center hover-white" onclick="new_task_full_menu()">${new_svg}</div>`
+        today_section.parentNode.childNodes[0].innerHTML += `<div class="center hover-white" onclick="new_task_full_menu()">${new_svg}</div>`
         timer_updater()
     </script>
 </body>
