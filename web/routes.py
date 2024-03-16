@@ -129,6 +129,22 @@ def delete_task():
     db.session.commit()
     return {"success": True}
 
+@app.route('/update_user', methods=['POST'])
+@login_required
+def update_user():
+    content = request.get_json(silent=True)
+    login = content['login']
+    password = content['password']
+
+    user = Users.query.filter_by(id=current_user.id).first()
+    user.login = login
+    if password:
+        hash_pwd = generate_password_hash(password)
+        user.password = hash_pwd
+    db.session.commit()
+    login_user(user)
+    return {"success": True}
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
@@ -140,12 +156,7 @@ def login_page():
 
         if user and check_password_hash(user.password, password):
             login_user(user)
-
-            next_page = request.args.get('next')
-            if next_page:
-                return redirect(next_page)
-            else:
-                return redirect("/")
+            return redirect("/")
     return render_template('login.html')
 
 

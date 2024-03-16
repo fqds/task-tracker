@@ -594,6 +594,22 @@
             }
         }
 
+        async function user_profile_update() {
+            const login = document.getElementById("input-login").value
+            const password = document.getElementById("input-password").value
+            const url = "/update_user"
+            const payload = {
+                "login": login,
+                "password": password,
+            }
+            const response = await request(url, payload);
+            const data = await response.json()
+            if (data["success"]) {
+                const profile = document.getElementById("profile-text")
+                profile.textContent = login
+            }
+        }
+        
         function user_profile_menu() {
             const body = document.body
             const my_id = makeid(8)
@@ -611,7 +627,7 @@
                         <input id="input-password" placeholder="********" class="gray input font-1">
                     </div>
                     <div class="row">
-                        <div onclick="delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
+                        <div onclick="user_profile_update(); delete_element_by_id('${my_id}')" class="white btn" style="width: 106px">${save_svg}<div style="color: #000000;">Сохранить</div></div>
                         <div onclick="delete_element_by_id('${my_id}')" class="black btn" style="width: 106px">${trash_svg}<div>Выйти</div></div>
                     </div>
                 </div>
